@@ -45,7 +45,7 @@ for arduino pico
 #ifndef LWIP_LWIPOPTS_H
 #define LWIP_LWIPOPTS_H
 
-
+#define TCP_LISTEN_BACKLOG            1
 
 #ifndef TARGET_RP2040
 
@@ -603,18 +603,19 @@ for arduino pico
 
 #else // __RP2040__
 
+#ifndef __ASSEMBLER__
    // From Arduino pico lwipopts.h
    #ifdef __cplusplus
    extern "C" {
    #endif // __cplusplus
    // Critical section protection
-   //extern void noInterrupts();
-   //extern void interrupts();
+   extern void noInterrupts();
+   extern void interrupts();
    #define SYS_ARCH_DECL_PROTECT int
-   #define SYS_ARCH_PROTECT(lev) noInterrupts
-   #define SYS_ARCH_UNPROTECT(lev) interrupts
+   #define SYS_ARCH_PROTECT(lev) noInterrupts()
+   #define SYS_ARCH_UNPROTECT(lev) interrupts()
 
-   //extern unsigned long __lwip_rand(void);
+   extern unsigned long __lwip_rand(void);
    #define LWIP_RAND() __lwip_rand()
 
    #ifndef __LWIP_MEMMULT
@@ -677,13 +678,13 @@ for arduino pico
    #endif
 
    // NTP
-   //extern void __setSystemTime(unsigned long long sec, unsigned long us);
+   extern void __setSystemTime(unsigned long long sec, unsigned long us);
    #define SNTP_SET_SYSTEM_TIME_US(sec, us)  __setSystemTime(sec, us)
    #define SNTP_MAX_SERVERS                  2
    //#define SNTP_SERVER_ADDRESS               "pool.ntp.org"
    #define SNTP_SERVER_DNS                   1
 
-   #define LWIP_DEBUG                  1
+   #define LWIP_DEBUG                  0
    #define ETHARP_DEBUG                LWIP_DBG_ON
    #define NETIF_DEBUG                 LWIP_DBG_OFF
    #define PBUF_DEBUG                  LWIP_DBG_ON
@@ -717,7 +718,7 @@ for arduino pico
 }
 #endif // __cplusplus
 
-
+#endif // !__ASSEMBLER__
 
 #endif // __RP2040__
 
