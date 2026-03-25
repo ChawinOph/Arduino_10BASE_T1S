@@ -45,7 +45,7 @@ for arduino pico
 #ifndef LWIP_LWIPOPTS_H
 #define LWIP_LWIPOPTS_H
 
-#define TCP_LISTEN_BACKLOG            0
+#define TCP_LISTEN_BACKLOG            1
 
 #ifndef TARGET_RP2040
 
@@ -684,7 +684,7 @@ for arduino pico
    //#define SNTP_SERVER_ADDRESS               "pool.ntp.org"
    #define SNTP_SERVER_DNS                   1
 
-   #define LWIP_DEBUG                  0
+   #undef LWIP_DEBUG
    #define ETHARP_DEBUG                LWIP_DBG_OFF
    #define NETIF_DEBUG                 LWIP_DBG_OFF
    #define PBUF_DEBUG                  LWIP_DBG_OFF
