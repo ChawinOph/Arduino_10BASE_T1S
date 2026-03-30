@@ -640,6 +640,7 @@ void TC6_CB_OnRxEthernetPacket(TC6_t *pInst, bool success, uint16_t len, uint64_
       // In your RX path:
       sniff_ether_ip(lw->tc.pbuf);        // before input()
       /* Integrator decided that TCP/IP stack shall consume the received packet */
+      //Serial.println("LWIP IN");
       err_t result = lw->ip.netint.input(lw->tc.pbuf, &lw->ip.netint);
       if (ERR_OK == result)
       {
